@@ -1,0 +1,32 @@
+name: Build Muguet iOS IPA
+
+on:
+  workflow_dispatch: # Allows manual trigger from GitHub UI
+
+jobs:
+  build-ios:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust & Target
+        run: |
+          rustup toolchain install 1.98.1
+          rustup target add aarch64-apple-ios --toolchain 1.98.1
+
+      - name: Install Homebrew Dependencies
+        run: brew install xcodegen
+
+      - name: Build IPA
+        run: |
+          chmod +x make-ios.sh
+          # Executes the iOS script with FREE=1 to bypass paid developer team restrictions
+          FREE=1 ./make-ios.sh --ipa
+
+      - name: Upload IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Muguet-iOS-IPA
+          path: build/*.ipa
