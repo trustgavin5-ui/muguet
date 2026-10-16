@@ -1,4 +1,4 @@
-name: Build Muguet iOS IPA
+name: Build Muguet iOS App
 
 on:
   workflow_dispatch: # Allows manual trigger from GitHub UI
@@ -23,14 +23,14 @@ jobs:
         run: |
           curl -L "https://drive.google.com/uc?export=download&id=1fcMmgSkb7feJZ5vDzq6GfdGzEUn5QBVc" -o game.zip
 
-      - name: Build IPA
+      - name: Build Project
         run: |
           chmod +x make-ios.sh
-          # Executes the iOS script with FREE=1 and passes the game zip asset
-          FREE=1 ./make-ios.sh game.zip --ipa
+          # Executes the iOS script with FREE=1 and passes the game zip asset (without --ipa)
+          FREE=1 ./make-ios.sh game.zip
 
-      - name: Upload IPA Artifact
+      - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Muguet-iOS-IPA
-          path: build/*.ipa/*.ipa
+          name: Muguet-iOS-Build
+          path: build/
