@@ -16,14 +16,13 @@ jobs:
           rustup toolchain install 1.98.1
           rustup target add aarch64-apple-ios --toolchain 1.98.1
 
-      - name: Install Homebrew & Python Dependencies
+      - name: Install Dependencies
         run: |
-          brew install xcodegen
-          pip3 install gdown
+          brew install xcodegen gdown
 
       - name: Download Build Assets from Google Drive
         run: |
-          # Uses gdown to handle Google Drive's >25MB large file confirmation prompt
+          # Uses gdown via Homebrew to bypass Google Drive's large-file confirmation
           gdown "1fcMmgSkb7feJZ5vDzq6GfdGzEUn5QBVc" -O game.zip
 
       - name: Build IPA
