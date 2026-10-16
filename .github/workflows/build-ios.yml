@@ -24,9 +24,11 @@ jobs:
           curl -L "https://drive.google.com/uc?export=download&id=1fcMmgSkb7feJZ5vDzq6GfdGzEUn5QBVc" -o game.zip
 
       - name: Build IPA
+        env:
+          CARGO_BUILD_JOBS: 2
         run: |
           chmod +x make-ios.sh
-          # Executes the iOS script with FREE=1 and includes --ipa to avoid the TEAM requirement
+          # Executes the iOS script with FREE=1 and includes --ipa for the free tier build
           FREE=1 ./make-ios.sh game.zip --ipa
 
       - name: Upload IPA Artifact
