@@ -37,4 +37,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Muguet-iOS-IPA
-          path: build/*.ipa/*.ipa
+          path: build/**/*.ipa
